@@ -20,7 +20,8 @@ const init = async() => {
     const server = new Hapi.Server({
         port: 8000
     });
-
+    
+    await server.register(require('inert'));
     await server.register(require('hapi-auth-jwt2'));
     server.auth.strategy('token', 'jwt', {
         key: 'vZiYpmTzqXMp8PpYXKwqc9ShQ1UhyAfy',

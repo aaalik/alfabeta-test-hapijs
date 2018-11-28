@@ -31,7 +31,7 @@ const routes = [
         }
     },
     {
-        path: '/auth',
+        path: '/login',
         method: 'POST',
         config: {
             auth: false
@@ -210,10 +210,19 @@ const routes = [
         method: 'GET',
         path: '/getspeed',
         handler: (request, h) => {
-            const getOperation = Knex('speed').select().then((results) => {
-                return {
-                    results
-                };
+            const getOperation = Knex('speed').select('speed').then((results) => {
+                const speed = {data:results};
+                // const person = new Object();
+                console.log(scope.myObject.value);
+                // const data1 = speed.data.map((data, i)=>{
+                //     var ind = 1;
+                //     var person = {ind:data};
+                //     person[ind].speed++;
+
+                //     console.log(person[ind].speed);
+                // });
+                console.log(speed);
+                return speed;
             }).catch((err) => {
                 return err;
             });
@@ -255,35 +264,11 @@ const routes = [
         }
     },
     {
-        method: 'POST',
-        path: '/login',
-        handler: (request, h) => {
-            const getOperation = Knex('users').where({
-                id: request.params.id
-            }).del().then((results) => {
-                return {
-                    results,
-                };
-            }).catch((err) => {
-                return err;
-            });
-            return getOperation;
-        }
-    },
-    {
         method: 'GET',
-        path: '/logout',
-        handler: (request, h) => {
-            const getOperation = Knex('users').where({
-                id: request.params.id
-            }).del().then((results) => {
-                return {
-                    results,
-                };
-            }).catch((err) => {
-                return err;
-            });
-            return getOperation;
+        path: '/datastatic',
+        handler: function (request, h) {
+            console.log('kepanggil');
+            return h.file('../public/test.html');
         }
     }
 ]
